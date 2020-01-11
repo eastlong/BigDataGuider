@@ -1,0 +1,22 @@
+1. CoarseGrainedExecutorBackend
+    
+    -- main
+    
+        -- run
+        
+            -- onStart
+            
+                -- ref.ask[Boolean](RegisterExecutor
+            
+            -- receive
+            
+                --  case RegisteredExecutor
+                    -- new Executor
+                
+                
+                
+                
+                
+                
+                
+                

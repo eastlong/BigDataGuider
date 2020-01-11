@@ -1,0 +1,27 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.itheima.controller.Quick3Controller",
+      "name": "person",
+      "type": "com.itheima.controller.Quick3Controller"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.itheima.controller.Quick3Controller",
+      "name": "person.addr",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.itheima.controller.Quick3Controller",
+      "name": "person.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.itheima.controller.Quick3Controller",
+      "name": "person.name",
+      "type": "java.lang.String"
+    }
+  ]
+}

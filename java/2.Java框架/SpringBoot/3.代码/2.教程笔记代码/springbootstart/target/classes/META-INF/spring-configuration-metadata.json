@@ -1,0 +1,58 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.start.domain.Student",
+      "name": "class.student",
+      "type": "com.start.domain.Student"
+    },
+    {
+      "sourceType": "com.start.MySpringBootStartApplication",
+      "name": "class.student",
+      "type": "com.start.MySpringBootStartApplication"
+    },
+    {
+      "sourceType": "com.start.domain.JdbcBean",
+      "name": "jdbc.mysql",
+      "type": "com.start.domain.JdbcBean"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.start.domain.Student",
+      "defaultValue": 0,
+      "name": "class.student.age",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.start.domain.Student",
+      "name": "class.student.grade",
+      "type": "java.lang.Double"
+    },
+    {
+      "sourceType": "com.start.domain.Student",
+      "name": "class.student.name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.start.domain.JdbcBean",
+      "name": "jdbc.mysql.driverclassname",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.start.domain.JdbcBean",
+      "name": "jdbc.mysql.password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.start.domain.JdbcBean",
+      "name": "jdbc.mysql.url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.start.domain.JdbcBean",
+      "name": "jdbc.mysql.username",
+      "type": "java.lang.String"
+    }
+  ]
+}

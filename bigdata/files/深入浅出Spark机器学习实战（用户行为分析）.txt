@@ -1,0 +1,41 @@
+深入浅出Spark机器学习实战（用户行为分析）
+课程观看地址：http://www.xuetuwuyou.com/course/144
+课程出自学途无忧网：http://www.xuetuwuyou.com
+
+
+一、课程目标
+ 熟练掌握SparkSQL的各种操作，深入了解Spark内部实现原理
+ 深入了解SparkML机器学习各种算法模型的构建和运行
+ 熟练Spark的API并能灵活运用
+ 能掌握Spark在工作当中的运用
+
+二、适合人群
+ 适合给，有java，scala基础，想往大数据spark机器学习这块发展
+ 适合给想学习spark，往数据仓库，大数据挖掘机器学习，方向发展的学员
+
+三、课程用到的软件及版本：
+Spark2.0，Spark1.6.2，STS，maven，Linux Centos6.5，mysql，mongodb3.2
+
+
+四、课程目录：
+
+课时1：Spark介绍 
+课时2：Spark2集群安装 
+课时3：Spark RDD操作 
+课时4：SparkRDD原理剖析 
+课时5：Spark2sql从mysql中导入 
+课时6：Spark1.6.2sql与mysql数据交互 
+课时7：SparkSQL java操作mysql数据 
+课时8：Spark统计用户的收藏转换率 
+课时9：Spark梳理用户的收藏以及订单转换率 
+课时10：最终获取用户的收藏以及订单转换率 
+课时11：Spark Pipeline构建随机森林回归预测模型 
+课时12：Spark 随机森林回归预测结果并存储进mysql
+课时13：Spark的决策树算法实现收藏转换率预测
+课时14：Spark机器学习各种分类算法介绍
+课时15：Spark机器学习协同过滤算法，构建用户与产品模型
+课时16：Spark协同算法完成给用户推荐产品。
+课时17：Spark与mongodb整合
+课时18：Spark的随机森林算法预测产品收藏购买结果存储进mongodb
+课时19：Spark操作RDD需要注意点，以及Spark资源参数调优
+课时20：Spark整个学习过程及其总结
