@@ -7,7 +7,7 @@
 <div align="center"> <img width="314px" src="csbasic/imgs/bigdataGuider-icon.PNG"/> </div>
 <br/>
 
-<table>
+<table align="center">
     <tr>
       <th><img width="50px" src="csbasic/imgs/java.jpg"></th>
       <th><img width="50px" src="csbasic/imgs/bigdata.jpg"></th>
