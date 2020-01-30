@@ -29,16 +29,17 @@
 
 ## 一、java进阶
 ### java并发编程
-[并发编程：并发编程基础](java/1.java基础与提高/1.多线程/并发编程总结（一）：并发编程基础.md)  
-[并发编程：线程池的使用与详解](java/1.java基础与提高/1.多线程/6.java线程池详解.md)  
-[并发编程：锁的使用](java/1.java基础与提高/1.多线程/并发编程总结：锁机制.md)  
-[乐观锁和悲观锁](java/1.java基础与提高/1.多线程/并发编程总结：乐观锁和悲观锁.md)  
-[并发编程：CountDownLatch](java/1.java基础与提高/1.多线程/并发编程：CountDownLatch.md)  
-[并发编程：java原子类](java/1.java基础与提高/1.多线程/并发编程：java原子类.md)  
-[并发编程：同步容器](java/1.java基础与提高/1.多线程/并发编程：同步容器.md)  
+[并发编程学习：并发编程基础](java/1.java基础与提高/1.多线程/并发编程总结（一）：并发编程基础.md)  
+[并发编程学习：线程池的使用与详解](java/1.java基础与提高/1.多线程/6.java线程池详解.md)  
+[并发编程学习：线程通信详解](java/1.java基础与提高/1.多线程/并发编程：线程通信.md)  
+[并发编程学习：锁的使用](java/1.java基础与提高/1.多线程/并发编程总结：锁机制.md)  
+[并发编程学习：乐观锁和悲观锁](java/1.java基础与提高/1.多线程/并发编程总结：乐观锁和悲观锁.md)  
+[并发编程学习：CountDownLatch](java/1.java基础与提高/1.多线程/并发编程：CountDownLatch.md)  
+[并发编程学习：java原子类](java/1.java基础与提高/1.多线程/并发编程：java原子类.md)  
+[并发编程学习：同步容器](java/1.java基础与提高/1.多线程/并发编程：同步容器.md)  
 
 ### redis
-[Redis安装.md](bigdata/Redis/Redis安装.md)  
+[Redis安装](bigdata/Redis/Redis安装.md)  
 [Redis基础](bigdata/Redis/Redis基础.md)    
 [Redis面试](bigdata/Redis/Redis综合题.md)   
 
@@ -57,9 +58,9 @@
 ## 二、大数据框架
 
 ## flink
-* [flink安装与基本使用.md](bigdata/flink/1.flink1.9学习笔记/1.flink1.9安装与基本使用.md)  
-* [WordCount入门案例实践.md](bigdata/flink/1.flink1.9学习笔记/2.WordCount入门案例实践.md)  
-* [flink核心概念综述.md](bigdata/flink/1.flink1.9学习笔记/3.flink核心概念综述.md)  
+* [flink安装与基本使用](bigdata/flink/1.flink1.9学习笔记/1.flink1.9安装与基本使用.md)  
+* [WordCount入门案例实践](bigdata/flink/1.flink1.9学习笔记/2.WordCount入门案例实践.md)  
+* [flink核心概念综述](bigdata/flink/1.flink1.9学习笔记/3.flink核心概念综述.md)  
 * [Flink理论基础](bigdata/flink/1.flink1.9学习笔记/4.Flink理论基础.md)  
 * [Flink运行架构](bigdata/flink/1.flink1.9学习笔记/5.Flink运行架构.md)  
 
