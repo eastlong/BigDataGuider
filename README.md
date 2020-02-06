@@ -28,10 +28,12 @@
 <p>二、大数据框架<p>
 <table align="center">
     <tr>
+      <th><img width="50px" src="csbasic/imgs/hadoop-icon.jpg"></th>
       <th><img width="50px" src="csbasic/imgs/flink.png"></th>
       <th><img width="50px" src="csbasic/imgs/spark-logo.png"></th>
     </tr>
     <tr>
+      <td align="center"><a href="#hadoop">Hadoop</a></td>
       <td align="center"><a href="#flink">Flink</a></td>
       <td align="center"><a href="#spark">Spark</a></td>
     </tr>
@@ -85,6 +87,11 @@
 
 
 ## 二、大数据框架
+### hadoop
+| Hadoop-Guide | article | description |
+| :---: | :---- | ----: |
+| hadoop入门 | [1.分布式文件存储系统 —— HDFS](bigdata/bigdata/notes/Hadoop-HDFS.md) <br/> [2.分布式计算框架 —— MapReduce](bigdata/bigdata/notes/Hadoop-MapReduce.md) <br/> [3.集群资源管理器 —— YARN](bigdata/bigdata/notes/Hadoop-YARN.md) <br/> [4.Hadoop 单机伪集群环境搭建](bigdata/bigdata/notes/installation/Hadoop单机环境搭建.md) <br/> [5.Hadoop 集群环境搭建](bigdata/bigdata/notes/installation/Hadoop集群环境搭建.md) <br/> [6.HDFS 常用 Shell 命令](bigdata/bigdata/notes/HDFS常用Shell命令.md) <br/> [7.HDFS Java API 的使用](bigdata/bigdata/notes/HDFS-Java-API.md) <br/> [8.基于 Zookeeper 搭建 Hadoop 高可用集群](bigdata/bigdata/notes/installation/基于Zookeeper搭建Hadoop高可用集群.md)|  |
+|hadoop面试题||
 
 ### flink
 * [flink安装与基本使用](bigdata/flink/1.flink1.9学习笔记/1.flink1.9安装与基本使用.md)  
