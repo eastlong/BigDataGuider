@@ -1,0 +1,3100 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:README</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-api-">电商管理后台 API 接口文档</h1>
+<h2 id="api-v1-">API V1 接口说明</h2>
+<ul>
+<li>接口基准地址：<code>http://localhost:8888/api/private/v1/</code></li>
+<li>服务端已开启 CORS 跨域支持</li>
+<li>API V1 认证统一使用 Token 认证</li>
+<li>需要授权的 API ，必须在请求头中使用 <code>Authorization</code> 字段提供 <code>token</code> 令牌</li>
+<li>使用 HTTP Status Code 标识状态</li>
+<li>数据返回格式统一使用 JSON</li>
+</ul>
+<h3 id="-">支持的请求方法</h3>
+<ul>
+<li>GET（SELECT）：从服务器取出资源（一项或多项）。</li>
+<li>POST（CREATE）：在服务器新建一个资源。</li>
+<li>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</li>
+<li>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</li>
+<li>DELETE（DELETE）：从服务器删除资源。</li>
+<li>HEAD：获取资源的元数据。</li>
+<li>OPTIONS：获取信息，关于资源的哪些属性是客户端可以改变的。</li>
+</ul>
+<h3 id="-">通用返回状态说明</h3>
+<table>
+<thead>
+<tr>
+<th><em>状态码</em></th>
+<th><em>含义</em></th>
+<th><em>说明</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>请求成功</td>
+</tr>
+<tr>
+<td>201</td>
+<td>CREATED</td>
+<td>创建成功</td>
+</tr>
+<tr>
+<td>204</td>
+<td>DELETED</td>
+<td>删除成功</td>
+</tr>
+<tr>
+<td>400</td>
+<td>BAD REQUEST</td>
+<td>请求的地址不存在或者包含不支持的参数</td>
+</tr>
+<tr>
+<td>401</td>
+<td>UNAUTHORIZED</td>
+<td>未授权</td>
+</tr>
+<tr>
+<td>403</td>
+<td>FORBIDDEN</td>
+<td>被禁止访问</td>
+</tr>
+<tr>
+<td>404</td>
+<td>NOT FOUND</td>
+<td>请求的资源不存在</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Unprocesable entity</td>
+<td>[POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误</td>
+</tr>
+<tr>
+<td>500</td>
+<td>INTERNAL SERVER ERROR</td>
+<td>内部错误</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-">登录</h2>
+<h3 id="-">登录验证接口</h3>
+<ul>
+<li>请求路径：login</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>password</td>
+<td>密码</td>
+<td>不能为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>rid</td>
+<td>用户角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+<td></td>
+</tr>
+<tr>
+<td>token</td>
+<td>令牌</td>
+<td>基于 jwt 的令牌</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 500,
+        &quot;rid&quot;: 0,
+        &quot;username&quot;: &quot;admin&quot;,
+        &quot;mobile&quot;: &quot;123&quot;,
+        &quot;email&quot;: &quot;123@qq.com&quot;,
+        &quot;token&quot;: &quot;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;登录成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">用户管理</h2>
+<h3 id="-">用户数据列表</h3>
+<ul>
+<li>请求路径：users</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>查询参数</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前页码</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>pagesize</td>
+<td>每页显示条数</td>
+<td>不能为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>totalpage</td>
+<td>总记录数</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前页码</td>
+<td></td>
+</tr>
+<tr>
+<td>users</td>
+<td>用户数据集合</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;totalpage&quot;: 5,
+        &quot;pagenum&quot;: 4,
+        &quot;users&quot;: [
+            {
+                &quot;id&quot;: 25,
+                &quot;username&quot;: &quot;tige117&quot;,
+                &quot;mobile&quot;: &quot;18616358651&quot;,
+                &quot;type&quot;: 1,
+                &quot;openid&quot;: &quot;&quot;,
+                &quot;email&quot;: &quot;tige112@163.com&quot;,
+                &quot;create_time&quot;: &quot;2017-11-09T20:36:26.000Z&quot;,
+                &quot;modify_time&quot;: null,
+                &quot;is_delete&quot;: false,
+                &quot;is_active&quot;: false
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">添加用户</h3>
+<ul>
+<li>请求路径：users</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>用户名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>password</td>
+<td>用户密码</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>rid</td>
+<td>用户角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 28,
+        &quot;username&quot;: &quot;tige1200&quot;,
+        &quot;mobile&quot;: &quot;test&quot;,
+        &quot;type&quot;: 1,
+        &quot;openid&quot;: &quot;&quot;,
+        &quot;email&quot;: &quot;test@test.com&quot;,
+        &quot;create_time&quot;: &quot;2017-11-10T03:47:13.533Z&quot;,
+        &quot;modify_time&quot;: null,
+        &quot;is_delete&quot;: false,
+        &quot;is_active&quot;: false
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;用户创建成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-">修改用户状态</h3>
+<ul>
+<li>请求路径：users/:uId/state/:type</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uId</td>
+<td>用户 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>用户状态</td>
+<td>不能为空<code>携带在url中</code>，值为 true 或者 false</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+  &quot;data&quot;: {
+    &quot;id&quot;: 566,
+    &quot;rid&quot;: 30,
+    &quot;username&quot;: &quot;admin&quot;,
+    &quot;mobile&quot;: &quot;123456&quot;,
+    &quot;email&quot;: &quot;bb@itcast.com&quot;,
+    &quot;mg_state&quot;: 0
+  },
+  &quot;meta&quot;: {
+    &quot;msg&quot;: &quot;设置状态成功&quot;,
+    &quot;status&quot;: 200
+  }
+}
+</code></pre>
+<h3 id="-id-">根据 ID 查询用户信息</h3>
+<ul>
+<li>请求路径：users/:id</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 503,
+        &quot;username&quot;: &quot;admin3&quot;,
+        &quot;role_id&quot;: 0,
+        &quot;mobile&quot;: &quot;00000&quot;,
+        &quot;email&quot;: &quot;new@new.com&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">编辑用户提交</h3>
+<ul>
+<li>请求路径：users/:id</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 id</td>
+<td>不能为空 <code>参数是url参数:id</code></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">/* 200表示成功，500表示失败 */
+{
+    &quot;data&quot;: {
+        &quot;id&quot;: 503,
+        &quot;username&quot;: &quot;admin3&quot;,
+        &quot;role_id&quot;: 0,
+        &quot;mobile&quot;: &quot;111&quot;,
+        &quot;email&quot;: &quot;123@123.com&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">删除单个用户</h3>
+<ul>
+<li>请求路径：users/:id</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 id</td>
+<td>不能为空<code>参数是url参数:id</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>响应参数</p>
+</li>
+<li><p>响应数据</p>
+</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;删除成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">分配用户角色</h3>
+<ul>
+<li>请求路径：users/:id/role</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td>不能为空<code>参数是url参数:id</code></td>
+</tr>
+<tr>
+<td>rid</td>
+<td>角色 id</td>
+<td>不能为空<code>参数body参数</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 508,
+        &quot;rid&quot;: &quot;30&quot;,
+        &quot;username&quot;: &quot;asdf1&quot;,
+        &quot;mobile&quot;: &quot;123123&quot;,
+        &quot;email&quot;: &quot;adfsa@qq.com&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;设置角色成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">权限管理</h2>
+<h3 id="-">所有权限列表</h3>
+<ul>
+<li>请求路径：rights/:type</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>类型</td>
+<td>值: list 或 tree , list 列表显示权限, tree 树状显示权限,<code>参数是url参数:type</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>权限 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>authName</td>
+<td>权限说明</td>
+<td></td>
+</tr>
+<tr>
+<td>level</td>
+<td>权限层级</td>
+<td></td>
+</tr>
+<tr>
+<td>pid</td>
+<td>权限父 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>path</td>
+<td>对应访问路径</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据
+type=list</li>
+</ul>
+<pre><code class="lang-javascript">  {
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 101,
+            &quot;authName&quot;: &quot;商品管理&quot;,
+            &quot;level&quot;: &quot;0&quot;,
+            &quot;pid&quot;: 0,
+            &quot;path&quot;: null
+        },
+        {
+            &quot;id&quot;: 102,
+            &quot;authName&quot;: &quot;订单管理&quot;,
+            &quot;level&quot;: &quot;0&quot;,
+            &quot;pid&quot;: 0,
+            &quot;path&quot;: null
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取权限列表成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<p>type=tree</p>
+<pre><code class="lang-javascript">;[
+  {
+    data: [
+      {
+        id: 101,
+        authName: &#39;商品管理&#39;,
+        path: null,
+        pid: 0,
+        children: [
+          {
+            id: 104,
+            authName: &#39;商品列表&#39;,
+            path: null,
+            pid: 101,
+            children: [
+              {
+                id: 105,
+                authName: &#39;添加商品&#39;,
+                path: null,
+                pid: &#39;104,101&#39;
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    meta: {
+      msg: &#39;获取权限列表成功&#39;,
+      status: 200
+    }
+  }
+]
+</code></pre>
+<h3 id="-">左侧菜单权限</h3>
+<ul>
+<li>请求路径：menus</li>
+<li>请求方法：get</li>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;:
+        {
+            &quot;id&quot;: 101,
+            &quot;authName&quot;: &quot;商品管理&quot;,
+            &quot;path&quot;: null,
+            &quot;children&quot;: [
+                {
+                    &quot;id&quot;: 104,
+                    &quot;authName&quot;: &quot;商品列表&quot;,
+                    &quot;path&quot;: null,
+                    &quot;children&quot;: []
+                }
+            ]
+        }
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取菜单列表成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">角色管理</h2>
+<h3 id="-">角色列表</h3>
+<ul>
+<li>请求路径：roles</li>
+<li>请求方法：get</li>
+<li>响应数据说明<ul>
+<li>第一层为角色信息</li>
+<li>第二层开始为权限说明，权限一共有 3 层权限</li>
+</ul>
+</li>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 30,
+            &quot;roleName&quot;: &quot;主管&quot;,
+            &quot;roleDesc&quot;: &quot;技术负责人&quot;,
+            &quot;children&quot;: [
+                {
+                    &quot;id&quot;: 101,
+                    &quot;authName&quot;: &quot;商品管理&quot;,
+                    &quot;path&quot;: null,
+                    &quot;children&quot;: [
+                        {
+                            &quot;id&quot;: 104,
+                            &quot;authName&quot;: &quot;商品列表&quot;,
+                            &quot;path&quot;: null,
+                            &quot;children&quot;: [
+                                {
+                                    &quot;id&quot;: 105,
+                                    &quot;authName&quot;: &quot;添加商品&quot;,
+                                    &quot;path&quot;: null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">添加角色</h3>
+<ul>
+<li>请求路径：roles</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>roleName</td>
+<td>角色名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>roleDesc</td>
+<td>角色描述</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>roleId</td>
+<td>角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>roleName</td>
+<td>角色名称</td>
+<td></td>
+</tr>
+<tr>
+<td>roleDesc</td>
+<td>角色描述</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;roleId&quot;: 40,
+        &quot;roleName&quot;: &quot;admin2&quot;,
+        &quot;roleDesc&quot;: &quot;admin2Desc&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-id-">根据 ID 查询角色</h3>
+<ul>
+<li>请求路径：roles/:id</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>角色 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>roleId</td>
+<td>角色 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>roleName</td>
+<td>角色名称</td>
+<td></td>
+</tr>
+<tr>
+<td>roleDesc</td>
+<td>角色描述</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;roleId&quot;: 31,
+        &quot;roleName&quot;: &quot;测试角色&quot;,
+        &quot;roleDesc&quot;: &quot;测试负责人&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">编辑提交角色</h3>
+<ul>
+<li>请求路径：roles/:id</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>角色 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>roleName</td>
+<td>角色名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>roleDesc</td>
+<td>角色描述</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;roleId&quot;: 31,
+        &quot;roleName&quot;: &quot;测试角色&quot;,
+        &quot;roleDesc&quot;: &quot;测试角色描述&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">删除角色</h3>
+<ul>
+<li>请求路径：roles/:id</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>角色 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;删除成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">角色授权</h3>
+<ul>
+<li>请求路径：roles/:roleId/rights</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:roleId</td>
+<td>角色 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>rids</td>
+<td>权限 ID 列表</td>
+<td>以 <code>,</code> 分割的权限 ID 列表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">删除角色指定权限</h3>
+<ul>
+<li>请求路径：roles/:roleId/rights/:rightId</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:roleId</td>
+<td>角色 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>:rightId</td>
+<td>权限 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据说明<ul>
+<li>返回当前所有拥有的角色信息</li>
+</ul>
+</li>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 101,
+            &quot;authName&quot;: &quot;商品管理&quot;,
+            &quot;path&quot;: null,
+            &quot;children&quot;: [
+                {
+                    &quot;id&quot;: 104,
+                    &quot;authName&quot;: &quot;商品列表&quot;,
+                    &quot;path&quot;: null,
+                    &quot;children&quot;: [
+                        {
+                            &quot;id&quot;: 105,
+                            &quot;authName&quot;: &quot;添加商品&quot;,
+                            &quot;path&quot;: null
+                        },
+                        {
+                            &quot;id&quot;: 116,
+                            &quot;authName&quot;: &quot;修改&quot;,
+                            &quot;path&quot;: null
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;取消权限成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">商品分类管理</h2>
+<h3 id="-">商品数据列表</h3>
+<ul>
+<li>请求路径：categories</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>[1,2,3]</td>
+<td>值：1，2，3 分别表示显示一层二层三层分类列表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat_id</td>
+<td>分类 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_name</td>
+<td>分类名称</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_pid</td>
+<td>分类父 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_level</td>
+<td>分类当前层级</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;cat_id&quot;: 1,
+            &quot;cat_name&quot;: &quot;手机相机&quot;,
+            &quot;cat_pid&quot;: 0,
+            &quot;cat_level&quot;: 0
+        },
+        {
+            &quot;cat_id&quot;: 2,
+            &quot;cat_name&quot;: &quot;电脑办公&quot;,
+            &quot;cat_pid&quot;: 0,
+            &quot;cat_level&quot;: 0
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">添加分类</h3>
+<ul>
+<li>请求路径：categories</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat_pid</td>
+<td>分类父 ID</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>cat_name</td>
+<td>分类名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>cat_level</td>
+<td>分类层级</td>
+<td>不能为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;cat_id&quot;: 62,
+        &quot;cat_name&quot;: &quot;相框&quot;,
+        &quot;cat_pid&quot;: &quot;1&quot;,
+        &quot;cat_level&quot;: &quot;1&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-id-">根据 id 查询分类</h3>
+<ul>
+<li>请求路径：categories/:id</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;cat_id&quot;: 3,
+        &quot;cat_name&quot;: &quot;厨卫电器&quot;,
+        &quot;cat_pid&quot;: 0,
+        &quot;cat_level&quot;: 0
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">编辑提交分类</h3>
+<ul>
+<li>请求路径：categories/:id</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>cat_name</td>
+<td>分类名称</td>
+<td>不能为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;cat_id&quot;: 22,
+        &quot;cat_name&quot;: &quot;自拍杆&quot;,
+        &quot;cat_pid&quot;: 7,
+        &quot;cat_level&quot;: 2
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">删除分类</h3>
+<ul>
+<li>请求路径：categories/:id</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;删除成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">分类参数管理</h2>
+<h3 id="-">参数列表</h3>
+<ul>
+<li>请求路径：categories/:id/attributes</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>sel</td>
+<td>[only,many]</td>
+<td>不能为空,通过 only 或 many 来获取分类静态参数还是动态参数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>attr_id</td>
+<td>分类参数 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>attr_name</td>
+<td>分类参数名称</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_id</td>
+<td>分类参数所属分类</td>
+<td></td>
+</tr>
+<tr>
+<td>attr_sel</td>
+<td>only:输入框(唯一) many:后台下拉列表/前台单选框</td>
+<td></td>
+</tr>
+<tr>
+<td>attr_write</td>
+<td>manual:手工录入 list:从列表选择</td>
+<td></td>
+</tr>
+<tr>
+<td>attr_vals</td>
+<td>如果 attr_write:list,那么有值，该值以逗号分隔</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;attr_id&quot;: 1,
+            &quot;attr_name&quot;: &quot;cpu&quot;,
+            &quot;cat_id&quot;: 22,
+            &quot;attr_sel&quot;: &quot;only&quot;,
+            &quot;attr_write&quot;: &quot;manual&quot;,
+            &quot;attr_vals&quot;: &quot;ffff&quot;
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">添加动态参数或者静态属性</h3>
+<ul>
+<li>请求路径：categories/:id/attributes</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>attr_name</td>
+<td>参数名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>attr_sel</td>
+<td>[only,many]</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>attr_vals</td>
+<td>如果是 many 就需要填写值的选项，以逗号分隔</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;attr_id&quot;: 44,
+        &quot;attr_name&quot;: &quot;测试参数&quot;,
+        &quot;cat_id&quot;: &quot;1&quot;,
+        &quot;attr_sel&quot;: &quot;many&quot;,
+        &quot;attr_write&quot;: &quot;list&quot;,
+        &quot;attr_vals&quot;: &quot;a,b,c&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-">删除参数</h3>
+<ul>
+<li>请求路径：categories/:id/attributes/:attrid</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>:attrid</td>
+<td>参数 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;删除成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-id-">根据 ID 查询参数</h3>
+<ul>
+<li>请求路径：categories/:id/attributes/:attrId</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>:attrId</td>
+<td>属性 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>attr_sel</td>
+<td>[only,many]</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>attr_vals</td>
+<td>如果是 many 就需要填写值的选项，以逗号分隔</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;attr_id&quot;: 1,
+        &quot;attr_name&quot;: &quot;cpu&quot;,
+        &quot;cat_id&quot;: 22,
+        &quot;attr_sel&quot;: &quot;only&quot;,
+        &quot;attr_write&quot;: &quot;manual&quot;,
+        &quot;attr_vals&quot;: &quot;ffff&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">编辑提交参数</h3>
+<ul>
+<li>请求路径：categories/:id/attributes/:attrId</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:id</td>
+<td>分类 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>:attrId</td>
+<td>属性 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;attr_id&quot;: 9,
+        &quot;attr_name&quot;: &quot;测试更新&quot;,
+        &quot;cat_id&quot;: &quot;43&quot;,
+        &quot;attr_sel&quot;: &quot;only&quot;,
+        &quot;attr_write&quot;: &quot;manual&quot;,
+        &quot;attr_vals&quot;: &quot;abc&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">商品管理</h2>
+<h3 id="-">商品列表数据</h3>
+<ul>
+<li>请求路径：goods</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>查询参数</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前页码</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>pagesize</td>
+<td>每页显示条数</td>
+<td>不能为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>总共商品条数</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前商品页数</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_state</td>
+<td>商品状态</td>
+<td>商品状态 0: 未通过 1: 审核中 2: 已审核</td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热销品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>is_promote</td>
+<td>是否是热销品</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;total&quot;: 50,
+        &quot;pagenum&quot;: &quot;1&quot;,
+        &quot;goods&quot;: [
+            {
+                &quot;goods_id&quot;: 144,
+                &quot;goods_name&quot;: &quot;asfdsd&quot;,
+                &quot;goods_price&quot;: 1,
+                &quot;goods_number&quot;: 1,
+                &quot;goods_weight&quot;: 1,
+                &quot;goods_state&quot;: null,
+                &quot;add_time&quot;: 1512954923,
+                &quot;upd_time&quot;: 1512954923,
+                &quot;hot_mumber&quot;: 0,
+                &quot;is_promote&quot;: false
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">添加商品</h3>
+<ul>
+<li>请求路径：goods</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_cat</td>
+<td>以为&#39;,&#39;分割的分类列表</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_introduce</td>
+<td>介绍</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pics</td>
+<td>上传的图片临时路径（对象）</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品的参数（数组）</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+  &quot;goods_name&quot;:&quot;test_goods_name2&quot;,
+  &quot;goods_price&quot;:20,
+  &quot;goods_number&quot;:30,
+  &quot;goods_weight&quot;:40,
+  &quot;goods_introduce&quot;:&quot;abc&quot;,
+  &quot;pics&quot;:[
+    {&quot;pic&quot;:&quot;/tmp_uploads/30f08d52c551ecb447277eae232304b8&quot;}
+    ],
+  &quot;attrs&quot;:[
+    {
+      &quot;attr_id&quot;:15,
+      &quot;attr_value&quot;:&quot;ddd&quot;
+    },
+    {
+      &quot;attr_id&quot;:15,
+      &quot;attr_value&quot;:&quot;eee&quot;
+    }
+    ]
+}
+</code></pre>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>总共商品条数</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前商品页数</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_cat</td>
+<td>以为&#39;,&#39;分割的分类列表</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_state</td>
+<td>商品状态</td>
+<td>商品状态 0: 未通过 1: 审核中 2: 已审核</td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热销品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>is_promote</td>
+<td>是否是热销品</td>
+<td></td>
+</tr>
+<tr>
+<td>pics</td>
+<td>上传的图片临时路径（对象）</td>
+<td>pics_id:图片 ID,goods_id:商品 ID,pics_big:大图,pics_mid:中图,pics_sma:小图</td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品的参数（数组）</td>
+<td>goods_id:商品 ID,attr_value:当前商品的参数值,add_price:浮动价格,attr_vals:预定义的参数值,attr_sel:手动输入，还是单选,</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 145,
+        &quot;goods_name&quot;: &quot;test_goods_name2&quot;,
+        &quot;goods_price&quot;: 20,
+        &quot;cat_id&quot;: 1,
+        &quot;goods_number&quot;: 30,
+        &quot;goods_weight&quot;: 40,
+        &quot;goods_introduce&quot;: &quot;abc&quot;,
+        &quot;goods_big_logo&quot;: &quot;&quot;,
+        &quot;goods_small_logo&quot;: &quot;&quot;,
+        &quot;goods_state&quot;: 1,
+        &quot;add_time&quot;: 1512962370,
+        &quot;upd_time&quot;: 1512962370,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 397,
+                &quot;goods_id&quot;: 145,
+                &quot;pics_big&quot;: &quot;uploads/goodspics/big_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_mid&quot;: &quot;uploads/goodspics/mid_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_sma&quot;: &quot;uploads/goodspics/sma_30f08d52c551ecb447277eae232304b8&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;ddd&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            },
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;eee&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建商品成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-id-">根据 ID 查询商品</h3>
+<ul>
+<li>请求路径：goods/:id</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>商品 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>总共商品条数</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前商品页数</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_state</td>
+<td>商品状态</td>
+<td>商品状态 0: 未通过 1: 审核中 2: 已审核</td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热销品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>is_promote</td>
+<td>是否是热销品</td>
+<td></td>
+</tr>
+<tr>
+<td>pics</td>
+<td>上传的图片临时路径（对象）</td>
+<td>pics_id:图片 ID,goods_id:商品 ID,pics_big:大图,pics_mid:中图,pics_sma:小图</td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品的参数（数组）</td>
+<td>goods_id:商品 ID,attr_value:当前商品的参数值,add_price:浮动价格,attr_vals:预定义的参数值,attr_sel:手动输入，还是单选,</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 145,
+        &quot;goods_name&quot;: &quot;test_goods_name2&quot;,
+        &quot;goods_price&quot;: 20,
+        &quot;goods_number&quot;: 30,
+        &quot;goods_weight&quot;: 40,
+        &quot;goods_introduce&quot;: &quot;abc&quot;,
+        &quot;goods_big_logo&quot;: &quot;&quot;,
+        &quot;goods_small_logo&quot;: &quot;&quot;,
+        &quot;goods_state&quot;: 1,
+        &quot;add_time&quot;: 1512962370,
+        &quot;upd_time&quot;: 1512962370,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 397,
+                &quot;goods_id&quot;: 145,
+                &quot;pics_big&quot;: &quot;uploads/goodspics/big_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_mid&quot;: &quot;uploads/goodspics/mid_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_sma&quot;: &quot;uploads/goodspics/sma_30f08d52c551ecb447277eae232304b8&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;ddd&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            },
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;eee&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建商品成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-">编辑提交商品</h3>
+<ul>
+<li>请求路径：goods/:id</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>商品 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_introduce</td>
+<td>介绍</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pics</td>
+<td>上传的图片临时路径（对象）</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品的参数（数组）</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+  &quot;goods_name&quot;:&quot;test_goods_name2&quot;,
+  &quot;goods_price&quot;:20,
+  &quot;goods_number&quot;:30,
+  &quot;goods_weight&quot;:40,
+  &quot;goods_introduce&quot;:&quot;abc&quot;,
+  &quot;pics&quot;:[
+    {&quot;pic&quot;:&quot;/tmp_uploads/30f08d52c551ecb447277eae232304b8&quot;}
+    ],
+  &quot;attrs&quot;:[
+    {
+      &quot;attr_id&quot;:15,
+      &quot;attr_value&quot;:&quot;ddd&quot;
+    },
+    {
+      &quot;attr_id&quot;:15,
+      &quot;attr_value&quot;:&quot;eee&quot;
+    }
+    ]
+}
+</code></pre>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>总共商品条数</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前商品页数</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>重量</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>goods_state</td>
+<td>商品状态</td>
+<td>商品状态 0: 未通过 1: 审核中 2: 已审核</td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热销品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>is_promote</td>
+<td>是否是热销品</td>
+<td></td>
+</tr>
+<tr>
+<td>pics</td>
+<td>上传的图片临时路径（对象）</td>
+<td>pics_id:图片 ID,goods_id:商品 ID,pics_big:大图,pics_mid:中图,pics_sma:小图</td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品的参数（数组）</td>
+<td>goods_id:商品 ID,attr_value:当前商品的参数值,add_price:浮动价格,attr_vals:预定义的参数值,attr_sel:手动输入，还是单选,</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 145,
+        &quot;goods_name&quot;: &quot;test_goods_name2&quot;,
+        &quot;goods_price&quot;: 20,
+        &quot;goods_number&quot;: 30,
+        &quot;goods_weight&quot;: 40,
+        &quot;goods_introduce&quot;: &quot;abc&quot;,
+        &quot;goods_big_logo&quot;: &quot;&quot;,
+        &quot;goods_small_logo&quot;: &quot;&quot;,
+        &quot;goods_state&quot;: 1,
+        &quot;add_time&quot;: 1512962370,
+        &quot;upd_time&quot;: 1512962370,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 397,
+                &quot;goods_id&quot;: 145,
+                &quot;pics_big&quot;: &quot;uploads/goodspics/big_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_mid&quot;: &quot;uploads/goodspics/mid_30f08d52c551ecb447277eae232304b8&quot;,
+                &quot;pics_sma&quot;: &quot;uploads/goodspics/sma_30f08d52c551ecb447277eae232304b8&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;ddd&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            },
+            {
+                &quot;goods_id&quot;: 145,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;eee&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;创建商品成功&quot;,
+        &quot;status&quot;: 201
+    }
+}
+</code></pre>
+<h3 id="-">删除商品</h3>
+<ul>
+<li>请求路径：goods/:id</li>
+<li>请求方法：delete</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>商品 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: null,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;删除成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<p>###同步商品图片</p>
+<ul>
+<li>请求路径：goods/:id/pics</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>商品 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>pics</td>
+<td>商品图片集合</td>
+<td>如果有 pics_id 字段会保留该图片，如果没有 pics_id 但是有 pic 字段就会新生成图片数据</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据</li>
+</ul>
+<pre><code class="lang-javascript">;[
+  { pic: &#39;tmp_uploads/db28f6316835836e97653b5c75e418be.png&#39; },
+  {
+    pics_id: 397,
+    goods_id: 145,
+    pics_big: &#39;uploads/goodspics/big_30f08d52c551ecb447277eae232304b8&#39;,
+    pics_mid: &#39;uploads/goodspics/mid_30f08d52c551ecb447277eae232304b8&#39;,
+    pics_sma: &#39;uploads/goodspics/sma_30f08d52c551ecb447277eae232304b8&#39;
+  }
+]
+</code></pre>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 96,
+        &quot;goods_name&quot;: &quot;iphoneXX&quot;,
+        &quot;goods_price&quot;: 2,
+        &quot;goods_number&quot;: 22,
+        &quot;goods_weight&quot;: 22,
+        &quot;goods_introduce&quot;: null,
+        &quot;goods_big_logo&quot;: &quot;./uploads/goods/20171113/483a3b8e99e534ec3e4312dbbaee7c9d.jpg&quot;,
+        &quot;goods_small_logo&quot;: &quot;./uploads/goods/20171113/small_483a3b8e99e534ec3e4312dbbaee7c9d.jpg&quot;,
+        &quot;goods_state&quot;: 0,
+        &quot;is_del&quot;: &quot;1&quot;,
+        &quot;add_time&quot;: 1510045904,
+        &quot;upd_time&quot;: 1512635159,
+        &quot;delete_time&quot;: 1512635159,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 383,
+                &quot;goods_id&quot;: 96,
+                &quot;pics_big&quot;: &quot;uploads/goodspics/big_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;,
+                &quot;pics_mid&quot;: &quot;uploads/goodspics/mid_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;,
+                &quot;pics_sma&quot;: &quot;uploads/goodspics/sma_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 96,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;eee&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            },
+            {
+                &quot;goods_id&quot;: 96,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;ddd&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<p>###同步商品属性</p>
+<ul>
+<li>请求路径：goods/:id/attributes</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>商品 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据</li>
+</ul>
+<pre><code class="lang-javascript">;[
+  {
+    attr_id: 15,
+    attr_value: &#39;ddd&#39;
+  },
+  {
+    attr_id: 15,
+    attr_value: &#39;eee&#39;
+  }
+]
+</code></pre>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 96,
+        &quot;goods_name&quot;: &quot;iphoneXX&quot;,
+        &quot;goods_price&quot;: 2,
+        &quot;goods_number&quot;: 22,
+        &quot;goods_weight&quot;: 22,
+        &quot;goods_introduce&quot;: null,
+        &quot;goods_big_logo&quot;: &quot;./uploads/goods/20171113/483a3b8e99e534ec3e4312dbbaee7c9d.jpg&quot;,
+        &quot;goods_small_logo&quot;: &quot;./uploads/goods/20171113/small_483a3b8e99e534ec3e4312dbbaee7c9d.jpg&quot;,
+        &quot;goods_state&quot;: 0,
+        &quot;is_del&quot;: &quot;1&quot;,
+        &quot;add_time&quot;: 1510045904,
+        &quot;upd_time&quot;: 1512635159,
+        &quot;delete_time&quot;: 1512635159,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 383,
+                &quot;goods_id&quot;: 96,
+                &quot;pics_big&quot;: &quot;uploads/goodspics/big_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;,
+                &quot;pics_mid&quot;: &quot;uploads/goodspics/mid_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;,
+                &quot;pics_sma&quot;: &quot;uploads/goodspics/sma_6f5750132abd3f5b2b93dd722fcde653.jpg&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 96,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;eee&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            },
+            {
+                &quot;goods_id&quot;: 96,
+                &quot;attr_id&quot;: 15,
+                &quot;attr_value&quot;: &quot;ddd&quot;,
+                &quot;add_price&quot;: null,
+                &quot;attr_name&quot;: &quot;fffffff&quot;,
+                &quot;attr_sel&quot;: &quot;many&quot;,
+                &quot;attr_write&quot;: &quot;list&quot;,
+                &quot;attr_vals&quot;: &quot;&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<p>###商品图片处理必须安装 GraphicsMagick</p>
+<ul>
+<li>linux</li>
+</ul>
+<pre><code>apt-get install GraphicsMagick
+</code></pre><ul>
+<li>Mac OS X</li>
+</ul>
+<pre><code>brew install GraphicsMagick
+</code></pre><ul>
+<li>Windows
+<a href="https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/1.3.27/GraphicsMagick-1.3.27-Q8-win64-dll.exe/download">点击下载</a></li>
+</ul>
+<h2 id="-">图片上传</h2>
+<ul>
+<li>请求路径：upload</li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file</td>
+<td>上传文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;tmp_path&quot;: &quot;tmp_uploads/ccfc5179a914e94506bcbb7377e8985f.png&quot;,
+        &quot;url&quot;: &quot;http://127.0.0.1:8888tmp_uploads/ccfc5179a914e94506bcbb7377e8985f.png&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;上传成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">订单管理</h2>
+<h3 id="-">订单数据列表</h3>
+<ul>
+<li>请求路径：orders</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>查询参数</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前页码</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>pagesize</td>
+<td>每页显示条数</td>
+<td>不能为空</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>用户 ID</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>pay_status</td>
+<td>支付状态</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>is_send</td>
+<td>是否发货</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>order_fapiao_title</td>
+<td>[&#39;个人&#39;,&#39;公司&#39;]</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>order_fapiao_company</td>
+<td>公司名称</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>order_fapiao_content</td>
+<td>发票内容</td>
+<td>可以为空</td>
+</tr>
+<tr>
+<td>consignee_addr</td>
+<td>发货地址</td>
+<td>可以为空</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;total&quot;: 1,
+        &quot;pagenum&quot;: &quot;1&quot;,
+        &quot;goods&quot;: [
+            {
+                &quot;order_id&quot;: 47,
+                &quot;user_id&quot;: 133,
+                &quot;order_number&quot;: &quot;itcast-59e7502d7993d&quot;,
+                &quot;order_price&quot;: 322,
+                &quot;order_pay&quot;: &quot;1&quot;,
+                &quot;is_send&quot;: &quot;是&quot;,
+                &quot;trade_no&quot;: &quot;&quot;,
+                &quot;order_fapiao_title&quot;: &quot;个人&quot;,
+                &quot;order_fapiao_company&quot;: &quot;&quot;,
+                &quot;order_fapiao_content&quot;: &quot;办公用品&quot;,
+                &quot;consignee_addr&quot;: &quot;a:7:{s:6:\&quot;cgn_id\&quot;;i:1;s:7:\&quot;user_id\&quot;;i:133;s:8:\&quot;cgn_name\&quot;;s:9:\&quot;王二柱\&quot;;s:11:\&quot;cgn_address\&quot;;s:51:\&quot;北京市海淀区苏州街长远天地大厦305室\&quot;;s:7:\&quot;cgn_tel\&quot;;s:11:\&quot;13566771298\&quot;;s:8:\&quot;cgn_code\&quot;;s:6:\&quot;306810\&quot;;s:11:\&quot;delete_time\&quot;;N;}&quot;,
+                &quot;pay_status&quot;: &quot;1&quot;,
+                &quot;create_time&quot;: 1508331565,
+                &quot;update_time&quot;: 1508331565
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">修改订单状态</h3>
+<ul>
+<li>请求路径：orders/:id</li>
+<li>请求方法：put</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>订单 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+<tr>
+<td>is_send</td>
+<td>订单是否发货</td>
+<td>1:已经发货，0:未发货</td>
+</tr>
+<tr>
+<td>order_pay</td>
+<td>订单支付</td>
+<td>支付方式 0 未支付 1 支付宝 2 微信 3 银行卡</td>
+</tr>
+<tr>
+<td>order_price</td>
+<td>订单价格</td>
+<td></td>
+</tr>
+<tr>
+<td>order_number</td>
+<td>订单数量</td>
+<td></td>
+</tr>
+<tr>
+<td>pay_status</td>
+<td>支付状态</td>
+<td>订单状态： 0 未付款、1 已付款</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>请求数据说明</p>
+<ul>
+<li>所有请求数据都是增量更新，如果参数不填写，就不会更新该字段</li>
+</ul>
+</li>
+<li><p>响应数据</p>
+</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;order_id&quot;: 67,
+        &quot;user_id&quot;: 1,
+        &quot;order_number&quot;: &quot;itcast-g7kmck71vjaujfgoi&quot;,
+        &quot;order_price&quot;: 20,
+        &quot;order_pay&quot;: &quot;0&quot;,
+        &quot;is_send&quot;: &quot;否&quot;,
+        &quot;trade_no&quot;: &quot;&quot;,
+        &quot;order_fapiao_title&quot;: &quot;个人&quot;,
+        &quot;order_fapiao_company&quot;: &quot;&quot;,
+        &quot;order_fapiao_content&quot;: &quot;&quot;,
+        &quot;consignee_addr&quot;: &quot;&quot;,
+        &quot;pay_status&quot;: &quot;0&quot;,
+        &quot;create_time&quot;: 1512533560,
+        &quot;update_time&quot;: 1512533560,
+        &quot;goods&quot;: [
+            {
+                &quot;id&quot;: 82,
+                &quot;order_id&quot;: 67,
+                &quot;goods_id&quot;: 96,
+                &quot;goods_price&quot;: 333,
+                &quot;goods_number&quot;: 2,
+                &quot;goods_total_price&quot;: 999
+            },
+            {
+                &quot;id&quot;: 83,
+                &quot;order_id&quot;: 67,
+                &quot;goods_id&quot;: 95,
+                &quot;goods_price&quot;: 666,
+                &quot;goods_number&quot;: 5,
+                &quot;goods_total_price&quot;: 999
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-">查看订单详情</h3>
+<ul>
+<li>请求路径：orders/:id</li>
+<li>请求方法：get</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>订单 ID</td>
+<td>不能为空<code>携带在url中</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;order_id&quot;: 67,
+        &quot;user_id&quot;: 1,
+        &quot;order_number&quot;: &quot;itcast-g7kmck71vjaujfgoi&quot;,
+        &quot;order_price&quot;: 20,
+        &quot;order_pay&quot;: &quot;0&quot;,
+        &quot;is_send&quot;: &quot;否&quot;,
+        &quot;trade_no&quot;: &quot;&quot;,
+        &quot;order_fapiao_title&quot;: &quot;个人&quot;,
+        &quot;order_fapiao_company&quot;: &quot;&quot;,
+        &quot;order_fapiao_content&quot;: &quot;&quot;,
+        &quot;consignee_addr&quot;: &quot;&quot;,
+        &quot;pay_status&quot;: &quot;0&quot;,
+        &quot;create_time&quot;: 1512533560,
+        &quot;update_time&quot;: 1512533560,
+        &quot;goods&quot;: [
+            {
+                &quot;id&quot;: 82,
+                &quot;order_id&quot;: 67,
+                &quot;goods_id&quot;: 96,
+                &quot;goods_price&quot;: 333,
+                &quot;goods_number&quot;: 2,
+                &quot;goods_total_price&quot;: 999
+            },
+            {
+                &quot;id&quot;: 83,
+                &quot;order_id&quot;: 67,
+                &quot;goods_id&quot;: 95,
+                &quot;goods_price&quot;: 666,
+                &quot;goods_number&quot;: 5,
+                &quot;goods_total_price&quot;: 999
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">数据统计</h2>
+<h3 id="-">基于类型统计（饼图）</h3>
+<ul>
+<li>请求路径：reports/:type</li>
+<li>请求方法：get</li>
+<li>响应数据</li>
+</ul>
+<h3 id="-">基于时间统计（折线图）</h3>
+<ul>
+<li>请求路径：reports/:type</li>
+<li>请求方法：get</li>
+<li>响应数据</li>
+</ul>
+<h3 id="-">基于销量统计（柱状图）</h3>
+<ul>
+<li>请求路径：reports/:type</li>
+<li>请求方法：get</li>
+<li>响应数据</li>
+</ul>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
