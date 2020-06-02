@@ -1,16 +1,18 @@
 <!-- TOC -->
 
 - [1. Redis入门教程](#1-redis入门教程)
-    - [1.1. Windows系统Redis安装](#11-windows系统redis安装)
-    - [1.2. 常用命令](#12-常用命令)
+  - [1.1. Windows系统Redis安装](#11-windows系统redis安装)
+  - [1.2. 常用命令](#12-常用命令)
 - [2. Redis命令](#2-redis命令)
-    - [2.1. 字符串命令](#21-字符串命令)
-        - [2.1.1. getrange key start end](#211-getrange-key-start-end)
-        - [2.1.2. GETSET key value](#212-getset-key-value)
-        - [密码设置](#密码设置)
-    - [Linux系统redis安装](#linux系统redis安装)
-    - [redis可视化客户端安装](#redis可视化客户端安装)
-        - [redis studio](#redis-studio)
+  - [2.1. 字符串命令](#21-字符串命令)
+    - [2.1.1. getrange key start end](#211-getrange-key-start-end)
+    - [2.1.2. GETSET key value](#212-getset-key-value)
+    - [2.1.3. 密码设置](#213-密码设置)
+  - [2.2. Linux系统redis安装](#22-linux系统redis安装)
+    - [2.2.1. 编译安装](#221-编译安装)
+    - [2.2.2. reids配置文件目录设置](#222-reids配置文件目录设置)
+  - [2.3. redis可视化客户端安装](#23-redis可视化客户端安装)
+    - [2.3.1. redis studio](#231-redis-studio)
 
 <!-- /TOC -->
 
@@ -72,7 +74,7 @@ redis-cli.exe -h 127.0.0.1  -p 6379
 127.0.0.1:6379> getset db redis
 "mongodb"
 ```
-### 密码设置
+### 2.1.3. 密码设置
 
 ```sh
 127.0.0.1:6379> config set requirepass "123456"
@@ -86,7 +88,10 @@ OK
 
 https://www.cnblogs.com/kismetv/category/1186633.html
 
-## Linux系统redis安装
+## 2.2. Linux系统redis安装
+[参考：linux安装redis5](https://blog.csdn.net/weixin_41158446/article/details/91427235)
+### 2.2.1. 编译安装
+1. 基本安装
 ```sh
 tar -zxvf redis-5.0.7.tar.gz
 
@@ -94,19 +99,86 @@ cd redis-5.0.7
 
 cd src/
 
+# 编译
 make
 
-./redis-server ../redis.conf
+# 安装
+make install
 
-./redis-cli
+# 启动服务端-在src目录下
+redis-server
+
+# 启动客户端-在src目录下
+redis-cli  # 或者 ./redis-cli
 
 127.0.0.1:6379> PING
 PONG  
 # 表示连接成功
 ```
 
-## redis可视化客户端安装
-### redis studio
+2. 指定端口启动服务
+```sh
+redis-server --port 6380
+
+redis-cli -p 6380
+```
+
+3. 指定配置文件
+```
+$ cat redis.conf | grep -v "#" |grep -v "^$" > redis-6379.conf
+```
+
+* 修改配置文件内容为：
+```sh
+port 6379
+daemonize yes
+logfile "6379.log"
+dir ./data/  # data目录需要在redis根目录下创建
+```
+
+* 后台启动redis
+```sh
+$ redis-server redis-6379.conf
+```
+
+* 查看redis进程是否真正启动
+```sh
+$ ps -ef |grep redis-
+```
+
+
+* 杀死redis进程
+
+kill -s 9 17825
+
+### 2.2.2. reids配置文件目录设置
+1. 配置与启动
+```sh
+$ mkdir conf
+$ mv redis-6379.conf conf/
+
+$ pwd
+/home/hadoop/app/redis-5.0.4
+
+# 配置文件启动redis
+$ redis-server conf/redis-6379.conf
+
+# 查看日志
+$ cd data
+```
+
+2. 若启动多个redis服务，只需要多创建几个redis-conf文件，启动对应端口的服务即可。
+
+
+
+
+
+
+
+
+
+## 2.3. redis可视化客户端安装
+### 2.3.1. redis studio
 [下载地址](https://github.com/cinience/RedisStudio/releases)
 
 打开即可使用，无需安装

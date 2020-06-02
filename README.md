@@ -185,7 +185,7 @@
 
 ## Redis
 [Redis安装](bigdata/Redis/Redis安装.md)  
-[Redis入门笔记](bigdata/Redis/Redis入门笔记.md)  
+[Redis数据类型](bigdata/Redis/Redis数据类型.md)  
 [Redis综合题](bigdata/Redis/Redis综合题.md)    
 
 ## hive
